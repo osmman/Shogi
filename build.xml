@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Shogi" default="compile">
+    <target name="compile">
+        <mkdir dir="build"/>
+        <mkdir dir="build/classes"/>
+        <copy todir="build/classes">
+            <fileset dir="src" excludes="**/*.java" />
+        </copy>
+        <javac destdir="build/classes/" srcdir="src" debug="true" includeAntRuntime="false" encoding="UTF-8">
+            <!--<compilerarg value="-Xlint"/>
+            -->
+        </javac>
+    </target>
+
+    <target name="build" depends="compile">
+        <mkdir dir="dist"/>
+        <jar jarfile="dist/shogi.jar" basedir="build/classes">
+            <manifest>
+                <attribute name="Main-Class" value="shogi.Main"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="javadoc">
+        <mkdir dir="dist/javadoc"/>
+        <javadoc  destdir="dist/javadoc" encoding="UTF-8" charset="UTF-8"
+           author="true"
+           version="true"
+           use="true"
+           windowtitle="Shogi">
+
+        
+            <packageset dir="src" defaultexcludes="yes">
+                <include name="**"/>
+            </packageset>
+        </javadoc>
+
+    </target>
+
+    <target name="run" depends="build">
+        <java classname="shogi.Main" classpath="dist/shogi.jar" fork="true"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="build"/>
+        <delete dir="dist"/>
+    </target>
+</project>
